@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<section class="py-12 mx-2 md:mx-10 lg:mx-16">
+    <div class="max-w-3xl mx-auto py-4 px-10 bg-white border border-gray-200 shadow-md rounded">
+        <h1 class="text-2xl font-bold mb-6 text-first-dominant">How to Use the Tool for Each Specific Industry?</h1>
+
+        <h2 class="text-xl mb-2 text-base">Using the forecasting tool</h2>
+        <ol class="mb-4 pl-8 text-gray-600 text-sm list-decimal">
+            <li>Begin by selecting a specific industry from the following options: Retail, Technology, Healthcare, Automotive, or Hospitality.</li>
+            <li>Once an industry is selected, you'll be presented with a description and the necessary fields for that industry. Note that while each industry has its unique fields, all include <b>Revenue</b> and <b>Date</b> fields.</li>
+            <li>Scroll further to find the <b>Sample JSON Format</b> and <b>Sample CSV Format</b>. You can utilize either format.</li>
+            <li>Click the "Go to Forecasting Tool" button to proceed to the tool page for the selected industry.</li>
+            <li>
+                On this page, you will find:
+                <ul class="pl-4">
+                    <li><b>Header</b> - Your chosen industry (e.g., Retail).</li>
+                    <li><b>Sales Forecast</b> - This section displays forecasted monthly sales values.</li>
+                    <li><b>Insights</b> - Here, you'll see the total, highest, lowest, and average forecasted monthly sales.</li>
+                    <li><b>Graph</b> - A visualization of the forecasted monthly sales.</li>
+                </ul>
+            </li>
+            <li>Below the graph, there are three buttons: <b>Upload</b>, <b>Process</b>, and <b>Reset</b>, each with its own functionality.</li>
+            <li>
+                Click the "Upload" button and select a valid historical sales data file (either JSON or CSV). Here's what a valid data file should have:
+                <ul class="pl-6 list-disc">
+                    <li>At least 3 years of data.</li>
+                    <li>Complete data for all months within those years. For instance, if your data spans from 2020-2022, it should contain records for all months of each year.</li>
+                    <li>All the necessary fields filled in. Consult the industry's <b>Sample Format</b> for specifics.</li>
+                </ul>
+            </li>
+            <li>Click the <b>Process</b> button to run the Forecasting System. Once processed, the Sales Forecast, Insights, and Graph sections will update.</li>
+            <li>Click the <b>Reset</b> button to clear all data and start over.</li>
+        </ol>
+{% endblock content %}

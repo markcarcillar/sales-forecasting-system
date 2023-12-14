@@ -1,0 +1,36 @@
+/* Color */
+.bg-first-dominant {
+    background-color: #0fb300;
+}
+
+.bg-second-dominant {
+    background-color: #1a2dff;
+}
+
+.bg-default {
+    background-color: #0099eb;
+}
+
+.text-first-dominant {
+    color: #0fb300;
+}
+
+.text-second-dominant {
+    color: #1a2dff;
+}
+
+.text-default {
+    color: #0099eb;
+}
+
+.border-first-dominant {
+    border-color: #0fb300;
+}
+
+.border-second-dominant {
+    border-color: #1a2dff;
+}
+
+.border-default {
+    border-color: #0099eb;
+}

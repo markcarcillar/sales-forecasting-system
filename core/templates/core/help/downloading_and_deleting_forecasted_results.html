@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<section class="py-12 mx-2 md:mx-10 lg:mx-16">
+    <div class="max-w-3xl mx-auto py-4 px-10 bg-white border border-gray-200 shadow-md rounded">
+        <h1 class="text-2xl font-bold mb-6 text-first-dominant">Downloading and deleting forecasted results.</h1>
+
+        <h2 class="text-xl mb-2 text-base">Download</h2>
+        <ol class="mb-4 pl-8 text-gray-600 text-sm list-decimal">
+            <li>Ensure you're logged in to your account. If not, please log in <a href="{% url 'login' %}" class="italic hover:underline">here</a>.</li>
+            <li>Before downloading, make sure you've used the tool, as there won't be any results to download otherwise.</li>
+            <li>Go to the tool page for your selected industry.</li>
+            <li>Scroll to the "Forecasted Results" section at the bottom of the page.</li>
+            <li>Here, the forecasted results are presented as downloadable links. Click on a link to begin the download.</li>
+            <li>After downloading, you'll need to extract the files. Supported file formats are CSV and JSON.</li>
+        </ol>
+
+        <h2 class="text-xl mb-2 text-base">Delete All</h2>
+        <ol class="mb-4 pl-8 text-gray-600 text-sm list-decimal">
+            <li>As with downloading, ensure you're logged in to your account.</li>
+            <li>Navigate to the tool page for your chosen industry.</li>
+            <li>Scroll down to the "Forecasted Results" section.</li>
+            <li>There, you'll find the "Clear All" button. <b>CAUTION: THIS BUTTON WILL DELETE ALL FORECASTED RESULTS. PROCEED WITH CARE.</b></li>
+            <li>Clicking "Clear All" will prompt you with a confirmation message, "Are you sure?"</li>
+            <li>Click the "✓" button to confirm or the "X" button to cancel.</li>
+        </ol>
+    </div>
+</section>
+{% endblock content %}

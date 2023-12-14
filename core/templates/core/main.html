@@ -1,0 +1,141 @@
+{% extends 'core/base.html' %}
+{% load static %}
+    
+{% block content %}
+<section id="mainSection" class="bg-white rounded py-2 m-2 md:my-4 md:mx-10 lg:mx-16">
+    <h1 id="industry" class="font-bold text-2xl mb-0 text-first-dominant mt-2 mb-3 text-center capitalize"><i class="fas fa-industry"></i> {{ industry }}</h1>
+
+    <!-- Forecast Details -->
+    <div class="mt-4 mb-2 mx-2 md:flex md:justify-center">
+        <div class="mb-4 md:ml-4 lg:ml-8 shadow-md rounded-md p-6">
+            <h1 class="font-bold text-lg mb-0 text-first-dominant"><i class="fas fa-calendar"></i> <span id="forecast-year" class="hidden"></span> Sales Forecast</h1>
+            <div class="p-2 text-sm">
+                <p class="mb-0"><b>January:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>February:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>March:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>April:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>May:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>June:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>July:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>August:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>September:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>October:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>November:</b> <span class="monthly-sales-forecast">None</span></p>
+                <p class="mb-0"><b>December:</b> <span class="monthly-sales-forecast">None</span></p>
+            </div>
+        </div>
+        <div class="md:ml-8 lg:ml-12">
+            <div class="shadow-md rounded-md p-6 mb-4">
+                <h1 class="font-bold text-lg mb-0 text-first-dominant"><i class="fas fa-lightbulb"></i> Insights</h1>
+                <div class="p-2 text-sm">
+                    <p class="mb-0"><b>Total sales:</b> <span id="total-sales">None</span></p>
+                    <p class="mb-0"><b>Highest sales (<span id="highest-sales-month">Month</span>):</b>  <span id="highest-sales">None</span></p>
+                    <p class="mb-0"><b>Lowest sales (<span id="lowest-sales-month">Month</span>):</b>  <span id="lowest-sales">None</span></p>
+                    <p class="mb-0"><b>Average sales:</b> <span id="average-sales">None</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-2">
+        <hr class="border-t my-4">
+    </div>
+
+    <!-- Graph -->
+    <div class="m-2">
+        <h1 class="font-bold text-xl mb-2 md:text-center text-first-dominant"><i class="far fa-chart-bar"></i> Graph</h1>
+        <div class="relative mx-2 md:h-80 md:flex md:justify-center">
+            <canvas id="resultGraph"></canvas>
+        </div>
+
+        <form id="myForm" class="py-2 m-2 sm:flex sm:justify-center sm:my-4 lg:mx-16">
+            {% csrf_token %}
+            <input type="hidden" name="industryname" value="{{ industry }}">
+            <label class="btn btn-upload btn-sm bg-teal-700 hover:bg-blue-300 text-sm cursor-pointer rounded-full mx-1 mb-2 font-bricolage text-white py-2 px-3 sm:py-3 sm:px-4">Upload<input type="file" id="file-upload" accept=".csv, .json" class="hidden" onchange="updateFileName()">
+            </label>
+            <input class="btn btn-process btn-sm bg-teal-700 hover:bg-blue-300 text-sm cursor-pointer rounded-full mx-1 mb-2 font-bricolage text-white py-2 px-3 sm:py-3 sm:px-4 disabled:opacity-75 disabled:cursor-default disabled:hover:bg-teal-700" type="button" value="Process" onclick="processData()" disabled>
+            <input class="btn btn-reset btn-sm bg-teal-700 hover:bg-blue-300 text-sm cursor-pointer rounded-full mx-1 mb-2 font-bricolage text-white py-2 px-3 sm:py-3 sm:px-4" type="reset" value="Reset" onclick="resetData()">
+        </form>
+
+        <p class="mt-3 text-center text-gray-700" id="result-text"></p>
+        <p class="text-red-600 text-center mt-1" id="result-error"></p>
+    </div>
+
+    <div class="my-2">
+        <hr class="border-t my-4">
+    </div>
+
+    <!-- Forecasted Results -->
+    <div class="m-2 md:mx-10 pb-8">
+        <h1 class="font-bold text-xl mb-6 md:text-center text-first-dominant"><i class="fas fa-cloud-download-alt"></i> Forecasted Results</h1>
+        
+        {% for forecast in forecasts %}
+            <div class="mb-1 md:inline md:mb-3 md:mx-2">
+                <a href="{% url 'download-forecast' forecast.id %}" class="text-teal-700 hover:text-blue-300 underline rounded-md">
+                    {{ forecast.date|date:"F d, Y H:i" }}
+                </a>
+            </div>
+        {% empty %}
+            {% if user.is_authenticated %}
+                <p class="text-gray-400 md:text-center">No data yet.</p>
+            {% else %}
+                <div class="text-center">
+                    <a href="{% url 'login' %}" class="underline text-gray-400 hover:text-gray-300">Login to save results</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {% if forecasts %}
+            <div class="my-4 md:flex md:justify-center">
+                <button id="clear-result-btn" class="inline-block py-2 px-4 text-white bg-red-500 hover:bg-red-600 rounded-full text-center">
+                    <i class="fas fa-trash-alt mr-2"></i>
+                    Clear All
+                </button>
+            
+                <div id="confirm-or-cancel-clear" class="hidden">
+                    <div>
+                        <form action="{% url 'clear-all-forecast' industry %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" id="confirm-check" class="text-red-500 ml-4">
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+
+                            <button type="button" id="confirm-cancel" class="text-gray-400 ml-4">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </form>
+                    
+                        
+                    </div>
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% if forecasts %}
+    <script>
+        const clearBtn = document.getElementById('clear-result-btn');
+        const confirmOrCancelClear = document.getElementById('confirm-or-cancel-clear');
+        const cancelBtn = document.getElementById('confirm-cancel');
+
+        clearBtn.addEventListener('click', () => {
+            clearBtn.classList.add('hidden');
+            confirmOrCancelClear.classList.remove('hidden');
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            clearBtn.classList.remove('hidden');
+            confirmOrCancelClear.classList.add('hidden');
+        });
+    </script>
+{% endif %}
+
+
+
+    
+{% endblock content %}
+
+{% block extra_script %}
+<script src="{% static 'script.js' %}"></script>
+{% endblock extra_script %}

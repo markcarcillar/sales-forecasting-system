@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<section class="py-12 mx-2 md:mx-10 lg:mx-16">
+    <div class="max-w-3xl mx-auto py-4 px-10 bg-white border border-gray-200 shadow-md rounded">
+        <h1 class="text-2xl font-bold mb-6 text-first-dominant">Help</h1>
+
+        <h2 class="text-xl mb-2 text-base hover:underline"><a href="{% url 'how-to-register-and-login-account' %}">How to Register and Log in to an Account?</a></h2>
+        <h2 class="text-xl mb-2 text-base hover:underline"><a href="{% url 'using-the-tool-for-each-specific-industry' %}">How to Use the Tool for Each Specific Industry?</a></h2>
+        <h2 class="text-xl mb-2 text-base hover:underline"><a href="{% url 'downloading-and-deleting-forecasted-results' %}">How to Download and Delete Forecasted Results?</a></h2>
+    </div>
+</section>
+{% endblock content %}

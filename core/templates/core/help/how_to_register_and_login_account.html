@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<section class="py-12 mx-2 md:mx-10 lg:mx-16">
+    <div class="max-w-3xl mx-auto py-4 px-10 bg-white border border-gray-200 shadow-md rounded">
+        <h1 class="text-2xl font-bold mb-6 text-first-dominant">How to Register and Log in to an Account?</h1>
+
+        <h2 class="text-xl mb-2 text-base">Register</h2>
+        <ol class="mb-4 pl-8 text-gray-600 text-sm list-decimal">
+            <li>Navigate to the Registration Page by clicking this link: <a class="italic hover:underline" href="{% url 'register' %}">Register</a>.</li>
+            <li>Enter a username and password. Ensure you choose a strong password..</li>
+            <li>Click the "Register" button.</li>
+        </ol>
+
+        <h2 class="text-xl mb-2 text-base">Login</h2>
+        <ol class="mb-4 pl-8 text-gray-600 text-sm list-decimal">
+            <li>Navigate to the Login Page by clicking this link: <a class="italic hover:underline" href="{% url 'login' %}">Login</a>.</li>
+            <li>Input your registered username and password.</li>
+            <li>Click the "Login" button.</li>
+        </ol>
+    </div>
+</section>
+{% endblock content %}

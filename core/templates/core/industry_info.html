@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<section class="bg-white rounded p-6 m-2 md:my-4 md:mx-10 lg:mx-16">
+    <h1 class="text-xl font-semibold text-first-dominant"><i class="fas fa-industry"></i> {{ industry_name }}</h1>
+    <p class="text-gray-600 mb-4">Description: {{ industry_description }}</p>
+    <ul class="list-disc ml-4">
+        {% for data in required_data %}
+            <li class="text-gray-800">{{ data.Name }} - {{ data.Description }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'main' industry_name %}" class="block mt-4 text-white py-2 px-4 bg-teal-700 hover:bg-blue-300 rounded text-center font-semibold transition duration-300">Go To Forecasting Tool</a>
+</section>
+<section class="bg-white rounded p-6 m-2 md:my-4 md:mx-10 lg:mx-16">
+    <div class="flex flex-col md:flex-row">
+        <!-- JSON Format -->
+        <div class="w-full md:w-1/2 p-4">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-first-dominant mb-2 text-center">Sample JSON Format</h3>
+                <pre class="whitespace-pre-wrap text-sm bg-gray-900 text-white rounded-lg p-4 overflow-x-auto">
+{{ sample_json_format }}</pre>
+            </div>
+        </div>
+
+        <!-- CSV Format -->
+        <div class="w-full md:w-1/2 p-4 mt-2 md:mt-0">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-first-dominant mb-2 text-center">Sample CSV Format</h3>
+                <pre class="whitespace-pre-wrap text-sm bg-gray-900 text-white rounded-lg p-4 overflow-x-auto">
+{{ sample_csv_format }}</pre>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
